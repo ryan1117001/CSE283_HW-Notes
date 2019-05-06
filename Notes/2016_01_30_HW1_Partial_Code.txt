@@ -1,0 +1,188 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class course {
+public:
+	string name;//An example: "CSE283"
+	int section;
+	int credits;
+	course * next;
+	course() { next = nullptr; }
+	course(string n, int s, int c) { name = n; section = s; credits = c;  next = nullptr; }
+};
+class student {
+public:
+	int ID;
+	course * head;
+	student() { head = nullptr; }
+	student(int i) { ID = i; head = nullptr; }
+};
+
+
+void add_student(student DB[], int &num_students);
+void add_course(student DB[], int &num_students);
+void print_courses(student DB[], int & num_students);
+void print_courses_of_a_student(student DB[], int & num_students);
+int main() {
+	student DB[10];
+	int num_students = 0;
+	int select = -1;
+	do {
+		cout << "Enter 0-9(?) to select an operation\n";
+		cout << "0 to quit program" << endl;
+		cout << "1 to add a student" << endl;
+		cout << "2 to add a course for a student" << endl;
+		cout << "3 to print all course(s) of a student" << endl;
+		cin >> select;
+		switch (select) {
+		case 0: break;//to quit
+		case 1: add_student(DB, num_students); break;
+		case 2: add_course(DB, num_students); break;
+		case 3: print_courses_of_a_student(DB, num_students);
+
+
+		}
+
+	} while (select != 0);
+	getchar();
+	getchar();
+	return 0;
+
+}
+void add_student(student DB[], int &num_students) {
+	int id;
+	cout << " Enter student ID\n";
+	cin >> id;
+	for (int i = 0; i < num_students; i++) {
+		if (DB[i].ID == id) {
+			cout << "The student already exists" << endl;
+			return;
+		}
+	}
+	DB[num_students].ID = id;
+	DB[num_students].head = nullptr;
+	num_students++;
+	return;
+}
+
+void add_course(student DB[], int &num_students) {
+	int id;
+	string n;
+	int s, c;
+	cout << "Enter student ID" << endl;
+	cin >> id;
+	int find = -1;
+	for (int i = 0; i < num_students; i++) {
+		if (DB[i].ID == id) {
+			find = i;
+			break;
+		}
+	}
+	if (find == -1) {
+		cout << "Error!  The studetn does not exist!" << endl;
+		return;
+	}
+	cout << "Enter course name, section, and credits, separated by space" << endl;
+	cin >> n >> s >> c;
+	course * p = DB[find].head;
+	while (p != nullptr) {
+		if (p->name == n) {
+			cout << " Error!  The course already exits!" << endl;
+			return;
+		}
+		p = p->next;
+	}
+	p = new course(n, s, c);
+	p->next = DB[find].head;
+	DB[find].head = p;
+	return;
+}
+void print_courses_of_a_student(student DB[], int & num_students) {
+	int id;
+	cout << "Enter student ID to print coursess" << endl;
+	cin >> id;
+	int find = -1;
+	for (int i = 0; i < num_students; i++) {
+		if (DB[i].ID == id) {
+			find = i;
+			break;
+		}
+	}
+	if (find == -1) {
+		cout << "Error!  The studetn does not exist!" << endl;
+		return;
+	}
+	cout << "The courses for student " << DB[find].ID << " : " << endl;
+	course * p = DB[find].head;
+	
+
+
+
+	while (p != nullptr) {
+		cout << p->name << " " << p->section << " " << p->credits << endl;
+		p = p->next;
+	}
+	return;
+}
+
+
+/*The folloiwng is a sample screenshot for the above code
+
+Enter 0-9(?) to select an operation
+0 to quit program
+1 to add a student
+2 to add a course for a student
+3 to print all course(s) of a student
+1
+Enter student ID
+99
+Enter 0-9(?) to select an operation
+0 to quit program
+1 to add a student
+2 to add a course for a student
+3 to print all course(s) of a student
+2
+Enter student ID
+99
+Enter course name, section, and credits, separated by space
+CSE283 1 3
+Enter 0-9(?) to select an operation
+0 to quit program
+1 to add a student
+2 to add a course for a student
+3 to print all course(s) of a student
+2
+Enter student ID
+99
+Enter course name, section, and credits, separated by space
+WRT105 8 3
+Enter 0-9(?) to select an operation
+0 to quit program
+1 to add a student
+2 to add a course for a student
+3 to print all course(s) of a student
+2
+Enter student ID
+99
+Enter course name, section, and credits, separated by space
+MAT295 6 4
+Enter 0-9(?) to select an operation
+0 to quit program
+1 to add a student
+2 to add a course for a student
+3 to print all course(s) of a student
+3
+Enter student ID to print coursess
+99
+The courses for student 0 :
+MAT295 6 4
+WRT105 8 3
+CSE283 1 3
+Enter 0-9(?) to select an operation
+0 to quit program
+1 to add a student
+2 to add a course for a student
+3 to print all course(s) of a student
+
+*/

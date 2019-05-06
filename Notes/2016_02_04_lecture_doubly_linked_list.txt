@@ -1,0 +1,60 @@
+//doubly linked list
+#include <iostream>
+using namespace std;
+
+class d_node {
+public:
+	int value;
+	d_node *next;
+	d_node *previous;
+	d_node() { next = nullptr; previous = nullptr; }
+	d_node(int i) {
+		value = i; next = nullptr; 
+		previous = nullptr; }
+
+};
+class d_linked_list {
+public:
+	int num_of_nodes;
+	d_node *head;
+	d_node *tail;
+	d_linked_list() {
+		num_of_nodes = 0;
+		head = tail = nullptr;
+	}
+	void make_d_linked_list(int k);
+	void print_d_linked_list();
+};
+void d_linked_list::make_d_linked_list(int k) {
+	d_node * p;
+	for (int i = k - 1; i >= 0; i--) {
+		p = new d_node(i);
+		if (num_of_nodes == 0) {
+			head = tail = p;
+		}
+		else {
+			p->next = head;
+			head->previous = p;
+			head = p;
+		}
+		num_of_nodes++;
+	}
+
+}
+void d_linked_list::print_d_linked_list() {
+	d_node * p = head;
+	while (p != nullptr) {
+		cout << p->value << " ";
+		p = p->next;
+	}
+
+}
+int main() {
+	d_linked_list d1;
+	d1.make_d_linked_list(10);
+	d1.print_d_linked_list();
+	getchar();
+	getchar();
+	return 0;
+
+}

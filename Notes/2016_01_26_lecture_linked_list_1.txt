@@ -1,0 +1,56 @@
+//Linked List
+#include <iostream>
+using namespace std;
+class node {
+public:
+	int value;
+	node * next;//next is a pointer to a node object
+	node() { next = nullptr; }
+	node(int i) { value = i; next = nullptr; }
+};
+class linked_list {
+public:
+	int num_of_nodes;
+	node * head;
+	linked_list() { num_of_nodes = 0; head = nullptr; }
+	void make_10_nodes(); 
+	void print_linked_list();
+};
+void linked_list::make_10_nodes() {
+	node * p;
+	for (int i = 9; i >= 0; i--) {
+		p = new node(i);
+		//(*p).next = head;
+		p->next = head;
+		head = p;
+	}
+}
+
+void linked_list::print_linked_list() {
+
+	node * p = head;
+	while (p != nullptr) {
+		cout << p->value << " ";
+		p = p->next;
+	}
+
+}
+int main() {
+
+	/**
+	int i, j;
+	cout << "Enter two integers seperated by space" << endl;
+	cin >> i >>j;
+	cout << i << " " << j << endl;
+	*/
+	linked_list L1;
+	L1.make_10_nodes();
+	L1.print_linked_list();
+
+
+
+	getchar();
+	getchar();
+	return 0;
+
+}

@@ -1,0 +1,39 @@
+#include <iostream>
+using namespace std;
+
+class ThreeD {
+public:
+	int ht;
+	int wid;
+	int dep;
+	ThreeD() { ht = wid = dep = 1; }
+	ThreeD(int i, int j, int k) { ht = i; wid = j; dep = k; }
+
+	friend ostream & operator << (ostream & s, ThreeD t);
+	friend istream & operator >> (istream &s, ThreeD &t);
+};
+
+ostream & operator << (ostream & s, ThreeD t);
+istream & operator >> (istream &s, ThreeD &t);
+
+int main() {
+
+	int i = 10;
+	cout << i << endl;
+	ThreeD t1(2, 2, 2);
+	cin >> t1;
+	cout << t1;
+	getchar();
+	getchar();
+	return 0;
+
+}
+
+ostream & operator << (ostream & s, ThreeD t) {
+	s << "( " << t.ht << " , " << t.wid << " , " << t.dep << " )";
+	return s;
+}
+istream & operator >> (istream &s, ThreeD &t) {
+	s >> t.ht >> t.wid >> t.dep;
+	return s;
+}

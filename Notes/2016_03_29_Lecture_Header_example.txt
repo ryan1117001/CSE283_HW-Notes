@@ -1,0 +1,39 @@
+//multi-file program
+//source .cpp program
+#include <iostream>
+#include "Header1.h"  //This is the way to include header file you created
+using namespace std;
+
+
+
+//void f1() { cout << "f1" << endl; }
+
+int main() {
+
+	AA o1(3, 4);
+	cout << o1.aa1 << endl;
+	cout << global << endl; 
+
+
+	f1();
+
+	getchar();
+	getchar();
+	return 0;
+
+}
+
+//Header1.h
+#include <iostream>
+using namespace std;
+int global = 100;
+
+class AA {
+public:
+	int aa1;
+	int aa2;
+	AA() {}
+	AA(int i, int j) { aa1 = i; aa2 = j; }
+};
+
+void f1() { cout << "f1" << endl; }

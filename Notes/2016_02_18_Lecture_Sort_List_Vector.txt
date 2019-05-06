@@ -1,0 +1,48 @@
+#include <iostream>
+#include <vector>
+#include <list>
+#include <map>
+#include <string>
+#include <algorithm> //for sorting vector
+using namespace std;
+class ThreeD {
+public:
+	int ht;
+	int wid;
+	int dep;
+	ThreeD() { ht = wid = dep = 1; }
+	ThreeD(int i, int j, int k) { ht = i; wid = j; dep = k; }
+	bool operator<(ThreeD t) { return(wid < t.wid); }
+
+};
+int main() {
+	list<int> L1 = { 5,4,3,2,1 };
+	list<int>::iterator it1 = L1.begin();
+	while (it1 != L1.end()) {
+		cout << *it1 << " ";
+		it1++;
+	}
+
+	L1.sort();
+	cout << endl;
+	it1 = L1.begin();
+	while (it1 != L1.end()) {
+		cout << *it1 << " ";
+		it1++;
+	}
+	cout << endl;
+	vector<int> V1 = { 5,4 ,3,2,1 };
+	for (size_t i = 0; i < V1.size(); i++) cout << V1[i] << " ";
+	sort(V1.begin(), V1.end());
+	cout << endl;
+	for (size_t i = 0; i < V1.size(); i++) cout << V1[i] << " ";
+	ThreeD t1(3, 4, 5), t2, t3(100, 200, 300);
+	list<ThreeD> L2 = { t1, t2, t3 };
+	vector<ThreeD> V2 = { t1, t2, t3 };
+	L2.sort();
+	sort(V2.begin(), V2.end());
+	getchar();
+	getchar();
+	return 0;
+
+}

@@ -1,0 +1,95 @@
+#include <iostream>
+#include <stack> //FILO
+#include <queue> //FIFO
+#include <set>
+#include <map>
+#include <string>
+
+using namespace std;
+
+template <class T> class ThreeD {//generic ThreeD class
+public:
+	T wid;
+	T ht;
+	T dep;
+	ThreeD() { wid = ht = dep = (T) 0; }
+	ThreeD(T i, T j, T k) { wid = i; ht = j; dep = k; }
+	T vol();
+
+};
+template <class T> T ThreeD<T>::vol() { return wid * ht * dep; }
+
+class threeD {
+public:
+	int ht;
+	int wid;
+	int dep;
+	threeD() { ht = wid = dep = 0; }
+	threeD(int i, int j, int k) { ht = i; wid = j; dep = k; }
+	bool operator<(const threeD T) const { return ht*wid*dep < T.ht * T.wid * T.dep; }
+
+};
+
+
+
+int main() {
+	/*
+	ThreeD<int> t1(3,4,5);
+	cout << t1.vol() << endl;
+	ThreeD<double> t2(2.2, 3.3, 4.4);
+	cout << t2.vol() << endl;
+	*/
+	stack<int> s;
+	s.push(5);
+	s.push(3);
+	s.push(2);
+	s.push(1);
+	cout << s.top();//One can only access the top element of the stack
+	//in this case, it will be value 1;
+	s.pop();//remove the element on top of stack
+
+	queue<int> q;
+	q.push(5);
+	q.push(3);
+	q.push(2);
+	q.push(1);
+	cout << q.front();
+	q.pop();
+
+	cout << endl;
+	map<int, string> m1;
+	m1[4] = "Dave";
+	m1[6] = "Pete";
+	m1[5] = "Pat";
+
+	map<int, string>::iterator it1 = m1.begin();
+	while (it1 != m1.end()) {
+		cout << it1->first << " " << it1->second << " ";
+		it1++;
+	}
+
+
+	threeD t5(3, 4, 5), t6(10, 20, 30), t7(50, 60, 70);
+
+	map<threeD, string> m3;
+	
+	m3[t6] = " medium object";
+	m3[t7] = " larage object";
+	m3[t5] = "Small Oject";
+	map<threeD, string>::iterator it2 = m3.begin();
+	while (it2 != m3.end()) {
+		cout << " " << it2->second << " ";
+		it2++;
+	}
+
+
+
+
+
+
+	getchar();
+	getchar();
+	return 0;
+
+
+}

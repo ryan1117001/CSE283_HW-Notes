@@ -1,0 +1,49 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class course {
+public:
+	string name;//An example: "CSE283"
+	int section;
+	int credits;
+	course(){}
+	course(string n, int s, int c) { name = n; section = s; credits = c; }
+};
+class student {
+public:
+	int ID;
+	course * head;
+	student() { head = nullptr; }
+	student(int i) { ID = i; head = nullptr;}
+};
+
+
+void add_student(student DB[], int &num_students);
+int main() {
+	student DB[10];
+	int num_students = 0;
+	int select = -1;
+	do {
+		cout << "Enter 0-9(?) to select an operation\n";
+		cin >> select;
+		switch (select) {
+		case 0: break;//to quit
+		case 1: add_student(DB, num_students);
+
+
+		}
+
+	} while (select != 0);
+		getchar();
+	getchar();
+	return 0;
+
+}
+void add_student(student DB[], int &num_students) {
+	int id;
+	cout << " Enter student ID\n";
+	cin >> id;
+	DB[num_students].ID = id;
+	DB[num_students].head = nullptr;
+}

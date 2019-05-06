@@ -1,0 +1,86 @@
+#include <iostream>
+using namespace std;
+class node {
+public:
+	int value;
+	node * next;
+	node() { next = nullptr; }
+	node(int i) { value = i; next = nullptr; }
+};
+class linked_list {
+public:
+	int num_of_nodes;
+	node * head;
+	linked_list() { num_of_nodes = 0; head = nullptr; }
+	void make_linked_list(int n);
+	void print_linked_list();
+	void remove_one(int i); //remove the first match
+	void reverse();
+
+};
+void linked_list::make_linked_list(int n) {
+	node *p;
+	for (int i = n - 1; i >= 0; i--) {
+		p = new node(i);
+		p->next = head;
+		head = p;
+		num_of_nodes++;
+	}
+}
+void linked_list::print_linked_list() {
+	cout << endl;
+	node *p = head;
+	while (p != nullptr) {
+		cout << p->value << " ";
+		p = p->next;
+	}
+}
+
+void linked_list::remove_one(int i) {
+	node * p = head, *p1 = head;
+	if (num_of_nodes == 0) { cout << "Error! Linked list empty" << endl; return; }
+	if (head->value == i) {
+		head = head->next;
+		delete p;
+		num_of_nodes--;
+		return;
+	}
+	while (p != nullptr) {
+		if (p->value == i) {
+			p1->next = p->next;
+			delete p;
+			num_of_nodes--;
+			return;
+		}
+		p1 = p;
+		p = p->next;
+	}
+}
+void linked_list::reverse() {
+	node * p1 = head, *p2 = head, *p3 = head;
+	if (num_of_nodes < 2) return;
+	p2 = p1->next;
+	while (p2 != nullptr) {
+		p3 = p2->next;
+		p2->next = p1;
+		if (p1 == head) p1->next = nullptr;
+		p1 = p2;
+		p2 = p3;
+	}
+	head = p1;
+
+}
+
+int main() {
+	linked_list L1;
+	L1.make_linked_list(20);
+	L1.print_linked_list();
+	L1.remove_one(11);
+	L1.print_linked_list();
+	L1.reverse();
+	L1.print_linked_list();
+	getchar();
+	getchar();
+	return 0;
+
+}

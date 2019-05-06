@@ -1,0 +1,88 @@
+#include <iostream>
+using namespace std;
+
+
+class big_data {
+public:
+	int size;
+	int * big_array;
+	big_data() { size = 0; big_array = nullptr; } //(regular constructor)
+	big_data(int i) { // regular constructor
+		size = i;
+		big_array = new int[size];
+		for (int j = 0; j < size; j++) big_array[j] = 0;
+	}
+	//copy constructor -- left ref copy constructor
+
+	big_data(const big_data & t) { //deep copying
+
+		size = t.size;
+		big_array = new int[size];
+		for (int i = 0; i < size; i++) big_array[i] = t.big_array[i];
+
+
+	}
+	//move constructor -- right ref copy constructor
+	big_data(big_data &&t) {
+
+		size = t.size;
+		big_array = t.big_array;
+		t.big_array = nullptr;
+
+	}
+
+	//destructor -- to remove all dynamically created structures 
+	~big_data() {
+		delete[] big_array;
+
+	}
+
+	//left ref operator = (assignment)
+	big_data operator=(big_data &t) {
+		size = t.size;
+		big_array = new int[size];
+		for (int i = 0;i < size; i++) big_array[i] = t.big_array[i];
+		return *this;
+	}
+
+//right ref operator = (asssignment)
+	big_data operator=(big_data && t) {
+		size = t.size;
+		big_array = t.big_array;
+		t.big_array = nullptr;
+		return *this;
+	}
+	
+
+
+	big_data three_times() {
+		big_data temp(size);
+		for (int i = 0; i < size; i++) temp.big_array[i] = 3 * big_array[i];
+		return move(temp); //move constructor
+	}
+
+
+};
+
+int main() {
+
+	big_data t1(10), t2, t3;
+	for (int i = 0; i < t1.size; i++) { t1.big_array[i] = i; }
+	t2 = t1; //t2.opertor=(t1); t1 is left ref.
+
+	t3 = t1.three_times(); //t3.operator=(t1.three_times());//ti.three_times() is right ref.
+
+	cout << "\n t1_big_array :" << endl;
+	for (int i = 0; i < t1.size; i++) cout << t1.big_array[i] << " ";
+
+	cout << "\n t2_big_array :" << endl;
+	for (int i = 0; i < t2.size; i++) cout << t2.big_array[i] << " ";
+
+	cout << " \nt3_big_array :" << endl;
+	for (int i = 0; i < t3.size; i++) cout << t3.big_array[i] << " ";
+
+
+	getchar();
+	getchar();
+	return 0;
+}

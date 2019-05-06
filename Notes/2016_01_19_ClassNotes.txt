@@ -1,0 +1,47 @@
+#include <iostream>
+using namespace std;
+class three_D {
+public:
+	int ht;//data member
+	int wid;
+	int dep;
+	//Using constructor to initialize object values
+	three_D() { ht = 1; wid = 1; dep = 1; }
+	three_D(int i, int j, int k) {
+		ht = i; wid = j; dep = k;
+		
+	}
+	three_D(int i) { ht = wid = dep = i; }
+};
+int main() {
+	//DATA TYPE
+	int i, j = 5;
+	char c, c1 = 'R';
+	double d1, d2= 3.45;
+	cout << d2<<endl;
+
+	three_D t1;
+	cout << t1.ht << " " << t1.wid << " " << t1.dep << endl;
+	t1.ht = 3;
+	t1.wid = 4;
+	t1.dep = 5;
+	cout << t1.ht << " " << t1.wid << " " << t1.dep << endl;
+	three_D t2(10, 20, 30);
+	three_D t3(33);
+	//pointer
+	int i9 = 10;
+	int * p1;//p1 is a pointer to int
+	p1 = &i9;//p1 holds the address of i1
+	i9++;
+	*p1 = *p1 + 25; //* is a dereference function
+	//The same as i9 = i9 +25;
+	//* function returns the value located at
+	//memory location with address value specified
+	//by p1
+
+	int *** p2;
+	getchar();
+	getchar();
+	return 0;
+
+}

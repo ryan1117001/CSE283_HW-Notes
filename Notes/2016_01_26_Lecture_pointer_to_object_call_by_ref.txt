@@ -1,0 +1,35 @@
+#include <iostream>
+using namespace std;
+class three_D {
+public:
+	int wid;//data member
+	int ht;
+	int dep;
+	three_D() { wid = ht = dep = 0; }//constructor
+	three_D(int i, int j, int k) { wid = i; ht = j; dep = k; }
+	int vol() { return wid*ht*dep; }//member funtion
+	int surface_area();
+};
+int three_D::surface_area() { return 2 * (ht*wid + ht * dep + wid *dep); }
+int doubled(int i) { i++; return i*i; }//call by vale
+void print_value(int i) { cout << i<< "\n"; }
+int new_doubled(int &i);//prototype
+int main() {
+	int i=5;
+	int j = doubled(i);
+	cout << "i = " << i << endl;
+	j = new_doubled(i);
+	cout << "i = " << i << endl;
+	print_value(j);
+	//call by value and call by reference
+	three_D t1, t2(3, 4, 5);
+	cout << t2.wid << " " << t2.ht << " " << t2.dep << endl;
+	cout << t2.vol() << endl;
+	three_D * p = new three_D(10,20,30);
+	three_D * p1 = &t2;
+	delete p;
+	getchar();
+	getchar();
+	return 0;
+}
+int new_doubled(int &i) { i++; return i*i; } //call by reference

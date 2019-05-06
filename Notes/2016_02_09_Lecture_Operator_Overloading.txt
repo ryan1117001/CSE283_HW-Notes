@@ -1,0 +1,96 @@
+//Operator Overloading
+#include <iostream>
+using namespace std;
+class ThreeD {
+public:
+	int ht; //[0]
+	int wid;//[1]
+	int dep;//[2]
+	ThreeD() { ht = wid = dep = 1; }
+	ThreeD(int i, int j, int k) { ht = i; wid = j; dep = k; }
+	ThreeD operator+(ThreeD t) {
+		ThreeD temp;
+		temp.ht = ht + t.ht;
+		temp.wid = wid + t.wid;
+		temp.dep = dep + t.dep;
+		return temp;
+	}
+	bool operator==(ThreeD t);
+	ThreeD operator++();//prefix
+	ThreeD operator++(int never_used);//postfix
+	int & operator[](int i);
+};
+bool ThreeD::operator==(ThreeD t) {
+	return (ht == t.ht && abs(wid - t.wid) < 2);
+}
+ThreeD ThreeD::operator++() {//prefix
+	ht++;
+	wid += 2;//wid = wid +2
+	dep++;
+	return *this;//this is a system defined pointer
+				 //pointing to the current object being considered.
+}
+
+ThreeD ThreeD::operator++(int never_used) {
+	ThreeD temp = *this;
+	ht++;
+	wid += 2;
+	dep++;
+	return temp;
+}
+
+//allows the returned object to be placed
+//on both sides of a statement
+int & ThreeD::operator[](int i) {
+	switch (i) {
+	case 0: return ht;
+	case 1: return wid;
+	case 2: return dep;
+	}
+}
+int main() {
+	int i = 5, j = 10, k;
+	k = i + j;
+	if (i < j) cout << i << endl;
+	//postfix unary operator
+	k = i++;//assign the value of i to k; after that increase
+			//the value of i by 1.
+
+			//prefix unary operator
+	k = ++i;//incease the value of i by one; after that
+			//assign i's new value to k.
+	i++; //the same as ++i;
+	i--;
+
+	ThreeD t1(3, 4, 5), t2(6, 7, 8), t3;
+	t3 = t1 + t2;//t3 = t1.operator+(t2);
+	if (t1 == t2) cout << " t1 = t2" << endl;
+
+	//t2++;//postfix
+	++t2;//prefix
+
+	cout << " t2.ht = " << t2.ht << " t2.wid =  " << t2.wid << "  t2.dep = " << t2.dep << endl;
+	t3 = ++t2;//*this is the same as t2
+	cout << " t2.ht = " << t2.ht << " t2.wid =  " << t2.wid << "  t2.dep = " << t2.dep << endl;
+	cout << " t3.ht = " << t3.ht << " t3.wid =  " << t3.wid << "  t3.dep = " << t3.dep << endl;
+	t3 = t2++;//postfix;
+	cout << " t2.ht = " << t2.ht << " t2.wid =  " << t2.wid << "  t2.dep = " << t2.dep << endl;
+	cout << " t3.ht = " << t3.ht << " t3.wid =  " << t3.wid << "  t3.dep = " << t3.dep << endl;
+	
+			  //Reference  -- nickname
+	int & w = i;
+	w = 5;//i=5; w and i refer to the same variable
+		  //int & k; error
+
+	int a[5];
+	a[3] = 33;
+	cout << a[3];
+	cout << t3[2];
+	t3[2] = 35;
+
+	
+	getchar();
+	getchar();
+	return 0;
+}
+

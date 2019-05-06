@@ -1,0 +1,106 @@
+//Revised and Reproduced class note 1/20/2016
+//by C-Y (Roger) Chen
+//Instructor CSE 283
+//Professor, Syracuse University
+
+#include <iostream>
+using namespace std;
+
+
+int main() {
+	//pointers
+	int k = 10;
+	int *p = &k; //p is a pointer pointing to an int (or simply p a pointer to int).  &k is the address of variable k (or object k).
+	
+	//A POINTER IS A TYPE OF VARIABLE WHOSE VALUE IS A MEMORY ADDRESS.
+	//* is a function (call de-reference function) which returns the value stored in a memory location, specified by the address
+
+	cout << k << " " << *p << endl;
+	(*p)++;
+	cout << k << " " << *p << endl;
+	// int * p; int* p; int *p;  All three are the same. Where to put space is not important.
+	//
+	int * p1, i, p10, *p2;
+		//p1 and p2 are pointers to int, while i and p10 are variables of type int
+	int *p3, *p4, *p5;  //p3, p4, p5 are all pointers to int
+	
+
+	//arrays and its relation with pointers
+
+	
+
+	int k1;
+	//cout << k1 << endl;  THIS STATEMENT WILL GIVE YOU COMPILE ERROR BECAUSE THE NO VALUE HAS BEEN ASSIGNED TO k1 (OR SIMPLY
+	//k1 IS NOT INITIALIZED).
+	
+	int A[5]; //elements of an array will not be initialized to zero; instead they will initially carry an arbitrary value.
+	cout << A[2] << endl; //FOR ARRAY, UNINITIALIZED ELEMENT WILL NOT CAUSE COMPILE ERROR, BUT WILL ASSUME THE VALUE OF WHATEVER
+	//PREEXISTING IN THE MEMORY LOCATION, WHICH IS USUALLY SOME GARBAGE INFORMAITON
+
+	
+	int A1[5] = { 1,2,3,4,5 }; //Initialize A[0], A[1], A[2], A[3], A[4] to be 1,2,3,4,5
+	cout << A1[2] << " " << A1[10] << endl;
+	//you will have 3 for A1[2] and an arbitrary value for A1[10].   NO COMPILE ERROR FOR A1[10]!! The compiler will not check the upper bound for your array.
+	//Instead, it will only record the address of the first element (i.e., &A1[0]) and advance 10 more positions and assume whatever
+	//value in that memory location to be A1[10].
+
+
+	//The name of a one-dimension array without  any array index, e.g., A1, will denote the address of the first array element (i.e., A1 is identical to &A1[0]).
+
+	A1[0] = 10; //The same as *A1 = 10;
+	A1[1] = 20; //The same as *(A1+1) = 10;
+	A1[2] = 30; //The same as *(A1+2) = 20;
+	A1[3] = 40; //The same as *(A1+3) = 30;
+	A1[4] = 50; //The same as *(A1+4) = 40;
+
+	int w = 5;
+	int * B= &w;
+	cout << *B << " " << B[0] << endl; //*B will be the same as B[0].
+	B[1] = 6; //The same as *(B+1) = 6;
+	B[2] = 7; //The same as *(B+2) = 7;
+	cout << B[1] << " " << *(B + 2) << endl;
+
+	int A2[5] = { 1,2 }; //the values of the array are initialized to 1 2 0 0 0
+	int A3[5] = { 5 }; //the values of the array are initialized to 5 0 0 0 0
+	int A4[5] = {}; //the values of the array are initialized to 0 0 0 0 0
+
+	//Dynamic memory management
+	
+	int * p100 = new int(70);
+	//new is a function which requests the system to allocate a memory space to hold an int,
+	//and returns the address of the memory allocation
+	//In our example, we also initialize the value in this memory space to a value of 70
+	//Note that new returns the address of this memory space, which is then assigned to the
+	//pointer p100.
+
+	cout << *p100 << endl;  //the output will be 70
+
+	delete p100; //This will delete the memory space pointed by p100 (i.e., return
+	//the memory space to system).
+
+	//Note that the memory space pointed by p100 is removed, but the pointer p100 is still
+	//there and can be reused.  For example, you can do the folliwng.
+
+	int q = 10000;
+	p100 = &q;
+
+	int *p101 = new int[15]; //Request the system to allocation space for an array of 15 int values,
+	//return the address of the first array element and assign the address to pointer p101
+
+	p101[0] = 25; //The same as *p101 = 25;
+	p101[1] = 35; //The same as *(p101 +1) = 35;
+	p101[2] = 45; //The same as *(p101 +2) =  45;
+	cout << p101[1] << " " << p101[500] << endl; //Note that p101[500] will give an arbitrary value.
+
+	//To delete the entire array and return the memory space to system, use the following format
+
+	delete[] p101;
+
+
+	
+	getchar();
+	getchar();
+	return 0;
+
+
+}

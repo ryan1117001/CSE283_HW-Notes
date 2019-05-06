@@ -1,0 +1,43 @@
+//producer_consumer example
+#include <iostream>
+#include <thread>
+#include <mutex> //mutually exclusive
+#include <condition_variable>
+using namespace std;
+
+mutex mtx;
+condition_variable cv;
+int meal; //number of meals ready for pick up
+
+void waiter(int ordernumber) {
+
+
+	unique_lock<mutex> lck(mtx);
+	while (meal == 0) cv.wait(lck);
+	cout << " order: ";
+	cout << ordernumber + 1 << " being taken care of with";
+	cout << meal - 1 << "meals also ready" << endl;
+	meal--;
+}
+
+void makeMeal(int ordernumber) {
+	unique_lock<mutex> lck(mtx);
+	meal++;
+	cv.notify_one();
+}
+
+
+int main() {
+
+	thread chef[5];
+	thread waiters[5];
+	for (int order = 0; order < 5; order++) {
+		chef[order] = thread(makeMeal, order);
+		waiters[order] = thread(waiter, order);
+	}
+	
+	getchar();
+	getchar();
+	return 0;
+
+}

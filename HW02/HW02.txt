@@ -1,0 +1,120 @@
+#include <iostream>
+using namespace std;
+class node {
+public:
+	int value;
+	node * next;
+	node() { next = nullptr; }
+	node(int i) { value = i; next = nullptr; }
+};
+class linked_list {
+public:
+	int num_of_nodes;
+	node * head;
+	linked_list() { num_of_nodes = 0; head = nullptr; }
+	void print_linked_list();
+	void make_linked_list(int n);
+	void make_random_linked_list(int k);
+	void sort();
+	void remove_all(int i);
+
+
+};
+void linked_list::print_linked_list() {
+	cout << endl;
+	node *p = head;
+	while (p != nullptr) {
+		cout << p->value << " ";
+		p = p->next;
+	}
+}
+void linked_list::make_linked_list(int n) {
+	node *p;
+	for (int i = n - 1; i >= 0; i--) {
+		p = new node(i);
+		p->next = head;
+		head = p;
+		num_of_nodes++;
+		p = new node(5); //to add duplicates to see if remove_all works
+		p->next = head;
+		head = p;
+		num_of_nodes++;
+	}
+}
+void linked_list::make_random_linked_list(int k) {
+
+	node *p;
+	for (int i = 0; i < k; i++) {
+		p = new node(rand() % 100);//0-99 random number
+		p->next = head;
+		head = p;
+		num_of_nodes++;
+	}
+
+}
+void linked_list::sort() {
+	node *start = head, *curr = NULL, *trail = NULL, *temp = NULL; 
+	if (num_of_nodes == 0) { //check if leist actually exists
+		cout << "Error! Linked list is empty" << endl;
+		return;
+	}
+	for (int i = 0; i < num_of_nodes; i++) {
+		curr = trail = head; //initial setup
+
+		while (curr->next != NULL) {
+			if (curr->value > curr->next->value) { //comparison to sort from least to greatest
+				temp = curr->next; //beginning of switch
+				curr->next = curr->next->next;
+				temp->next = curr;
+				if (curr == head)
+					head = trail = temp;
+				else
+					trail->next = temp;
+				curr = temp;
+			}
+			trail = curr;
+			curr = curr->next;
+		}
+	}
+	
+}
+void linked_list::remove_all(int i) {
+	node * p = head, *p1 = head, *temp;
+	if (num_of_nodes == 0) { cout << "Error! Linked list empty" << endl; return; }
+	while (p != nullptr) {
+		if (p == head && p->value == i) { //removes head and makes following pointer the new head
+			p1 = head;
+			head = head->next;
+			p = head;
+			delete p1;
+			num_of_nodes--;
+		}
+		else if (p->value == i) { //deletes and connects
+			temp = p;
+			p1->next = p->next;
+			p = p->next;
+			delete temp;
+			num_of_nodes--;
+		}
+		else  { //move on to check the next in the linked list
+			p1 = p;
+			p = p->next;
+		}
+	}
+	return;
+}
+
+int main() {
+	linked_list L1;
+	L1.make_random_linked_list(10);
+	L1.print_linked_list();
+	L1.sort();
+	L1.print_linked_list();
+	L1.make_linked_list(10);
+	L1.print_linked_list();
+	L1.remove_all(5);
+	L1.print_linked_list();
+	getchar();
+	getchar();
+	return 0;
+}

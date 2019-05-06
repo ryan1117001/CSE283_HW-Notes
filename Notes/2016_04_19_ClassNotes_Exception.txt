@@ -1,0 +1,36 @@
+//exception handler
+#include <iostream>
+//#include <string>
+using namespace std;
+
+
+
+//void f1();
+int main() {
+
+	int i=100, j, k;
+	j = -5;
+	try {
+		if (j == 0) throw 101;
+		if (j < 0) throw "negative";
+		k = i / j;
+		
+
+	}
+	catch (int p) {
+
+		cout << "Error! Code = " << p <<endl;
+	}
+	catch (char * s) {
+		cout << s << endl;
+
+	}
+	catch (...) {
+
+		cout << "Something is wrong" << endl;
+	}
+
+	getchar();
+	getchar();
+	return 0;
+}

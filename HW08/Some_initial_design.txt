@@ -1,0 +1,70 @@
+//This is an outline for a design to help you get started.
+//You should view it as a reference for your design, rather than a set of requirements you need to implement.
+#include <iostream>
+#include <vector>
+using namespace std;
+
+//Class point definition
+class point {
+	double x, y;
+
+	//overloading constructor
+public:
+
+	point() {} //default constructor
+	point(double i, double j) { x = i; y = j; }
+
+			
+	double operator-(point &p2);  //overloading operator-  :  returns distance between two points
+	void display_point();
+	void input_point();
+	void set_point(double a, double b);
+	point get_point();
+
+};
+
+
+//Class shape definition
+class shape {
+protected:
+	vector<point> corners;
+
+public:
+	shape();//default constructor
+	point center();
+	void input_corners();
+
+	//The following are all pure virtual member funtions
+	virtual double area() = 0;
+	virtual double perimeter() = 0; //Note that the member functions input_corners() might not input corner points in proper sequence
+	//and make perimenter calculation difficult
+	virtual void display_corners() = 0;
+};
+
+class triangle : public shape
+{
+protected:
+	double side1, side2, side3;
+	double angle1, angle2, angle3;
+public:
+
+	triangle() {}//default constructor
+
+	virtual double area();
+	virtual double perimeter();
+	virtual void display_corners();
+	double base();
+	double height();
+	bool isright();
+	bool is_isosceles();
+	bool is_equilateral();
+	bool is_acute();
+	bool is_obtuse();
+
+};
+
+class rectangle : public shape {
+
+	//Design it in a way similar to triangle class.
+};
+

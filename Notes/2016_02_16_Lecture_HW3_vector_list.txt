@@ -1,0 +1,95 @@
+#include <iostream>
+#include <vector>
+#include <list>
+#include <map>
+#include <string>
+using namespace std;
+
+class course {
+public:
+	string name;
+	int section;
+	int credits;
+	course() {}
+	course(string n, int s, int c) { name = n; section = s; credits = c; }
+	bool operator==(course c) { return (name == c.name); }
+};
+class student {
+public:
+	int ID;
+	list<course> * head;
+	student() { head = nullptr; }
+	student(int i) { ID = i; head = nullptr; }
+	bool operator==(student s) { return (ID == s.ID); }
+};
+
+void add_student(vector<student> &DB);
+void add_course(vector<student> &DB);
+void print_DB(vector<student> &DB);
+int main() {
+	vector<student> DB;
+	int select;
+	do {
+		cout << "Enter 0 to quit" << endl;
+		cout << "Enter 1 to add a student " << endl;
+		cout << "Enter 2 to add a course" << endl;
+		cout << "Enter 3 to print DB" << endl;
+		cin >> select;
+		switch (select) {
+		case 0: break;
+		case 1: add_student(DB); break;
+		case 2: add_course(DB); break;
+		case 3: print_DB(DB); break;
+		}
+
+
+
+	} while (select != 0);
+
+}
+
+void add_student(vector<student> &DB) {
+	cout << "Enter student ID" << endl;
+	int id;
+	cin >> id;
+	student s1(id);
+	vector<student>::iterator it1 = find(DB.begin(), DB.end(), s1);
+	if (it1 != DB.end()) { cout << "Error!  The student already exists in DB" << endl;
+	return;
+	}
+	s1.head = new list<course>;
+	DB.push_back(s1);
+
+}
+void add_course(vector<student> &DB) {
+	cout << "Enter student ID" << endl;
+	int id;
+	cin >> id;
+	student s1(id);
+	vector<student>::iterator it1 = find(DB.begin(), DB.end(), s1);
+	if (it1 == DB.end()) {
+		cout << "Error!  The student does not exist in DB" << endl;
+		return;
+	}
+	cout << "Enter course name, section, credits separated by space" << endl;
+	string name;
+	int section, credits;
+	cin >> name >> section >> credits;
+	course c(name, section, credits);
+	list<course>::iterator it2 = find(it1->head->begin(), it1->head->end(), c);
+	if (it2 != it1->head->end()) { 
+		cout << "Error!  The course already exists" << endl;
+		return;
+	}
+	it1->head->push_front(c);
+}
+void print_DB(vector<student> &DB) {
+	list<course>::iterator it1;
+	for (size_t i = 0; i < DB.size(); i++) {
+		it1 = (DB[i].head)->begin();
+		while (it1 != (DB[i].head)->end()) {
+			cout << it1->name << " " << it1->section << " " << it1->credits << endl;
+			it1++;
+		}
+	}
+}

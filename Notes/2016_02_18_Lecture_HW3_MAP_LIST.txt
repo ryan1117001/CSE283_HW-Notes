@@ -1,0 +1,135 @@
+#include <iostream>
+#include <vector>
+#include <list>
+#include <map>
+#include <string>
+using namespace std;
+
+class course {
+public:
+	string name;
+	int section;
+	int credits;
+	course() {}
+	course(string n, int s, int c) { name = n; section = s; credits = c; }
+	bool operator==(course c) { return (name == c.name); }
+};
+class student {
+public:
+	int ID;
+	list<course> * head;
+	student() { head = nullptr; }
+	student(int i) { ID = i; head = nullptr; }
+	bool operator==(student s) { return (ID == s.ID); }
+};
+
+void add_student(map<int, list<course>> &DB);
+void add_course(map<int, list<course>> &DB);
+void print_DB(map<int, list<course>> &DB);
+//void add_course(vector<student> &DB);
+//void print_DB(vector<student> &DB);
+int main() {
+	/**
+	map<string, double> DB1;
+	DB1["John"] = 3.56;
+	DB1["Dave"] = 4.00;
+	DB1["Sam"] = 2.66;
+
+
+	map<string, double>::iterator it6 = DB1.begin();
+	while (it6 != DB1.end()) {
+		cout << it6->first << " " << it6->second << endl;
+		it6++;
+
+	}
+	cout << endl;
+	map<int, string> DB2;
+	DB2[20] = "John";
+	DB2[5] = "Dave";
+	DB2[31] = "Sam";
+
+	if (DB2.find(20) != DB2.end()) DB2.erase(DB2.find(20));
+
+	map<int, string>::iterator it7 = DB2.begin();
+	while (it7 != DB2.end()) {
+		cout << it7->first << " " << it7->second << endl;
+		it7++;
+	}
+	*/
+
+
+	map<int, list<course> > DB;
+	int select;
+	do {
+		cout << "Enter 0 to quit" << endl;
+		cout << "Enter 1 to add a student " << endl;
+		cout << "Enter 2 to add a course" << endl;
+		cout << "Enter 3 to print DB" << endl;
+		cin >> select;
+		switch (select) {
+		case 0: break;
+		case 1: add_student(DB); break;
+		case 2: add_course(DB); break;
+		case 3: print_DB(DB); break;
+		}
+
+
+
+	} while (select != 0);
+
+	getchar();
+	getchar();
+	return 0;
+}
+void add_student(map<int, list<course>> &DB) {
+	int id;
+	cout << " Enter Student ID" << endl;
+	cin >> id;
+	if (DB.find(id) != DB.end()) {
+		cout << "Error!  The student already exists";
+		return;
+	}
+	list<course> l1;
+	DB[id] = l1;
+}
+
+void add_course(map<int, list<course>> &DB) {
+	int id;
+	cout << " Enter Student ID" << endl;
+	cin >> id;
+	map<int, list<course>>::iterator it9 = DB.find(id);
+	if (it9 == DB.end()) {
+		cout << "Error!  The student does not exist";
+		return;
+	}
+	cout << "Enter course name, section, credits separated by space" << endl;
+	course c1;
+	cin >> c1.name >> c1.section >> c1.credits;
+	if (find((it9->second).begin(), (it9->second).end(), c1) != (it9->second).end()) {
+		cout << "Error!  The course already exists" << endl;
+		return;
+	}
+	(it9->second).push_front(c1);
+}
+void print_DB(map<int, list<course>> &DB) {
+
+	map<int, list<course>>::iterator it1 = DB.begin();
+	list<course>::iterator it2;
+
+	while (it1 != DB.end()) {
+		it2 = (it1->second).begin();
+		cout << "The courses for student  " << it1->first << " : " << endl;
+		while (it2 != (it1->second).end()) {
+
+			cout << it2->name << " " << it2->section << " " << it2->credits << endl;
+			it2++;
+		}
+
+		it1++;
+
+	}
+
+
+
+
+}

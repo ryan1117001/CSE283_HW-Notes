@@ -1,0 +1,55 @@
+#include <chrono>
+
+
+this_thread::sleep_for(chrono::seconds(rand()%5+1));
+
+
+copy constructor will be invoked in three cases:
+
+case 1: declare and initialize
+
+my_vector v1(v2); - if you don't provide copy constructor, then the system default one will be used.
+
+Case2: pass by value (call by value)
+
+void fun(my_vector v) ...
+
+
+
+fun(v2); //a new copy is created using copy constructor
+
+case 3:
+return by value from a function //you can define move constructor, or only use copy constructor.
+
+
+
+Assignment statement does not invoke copy constructor
+v1 = v2; will not invoke copy consturctor.
+
+
+func(move(x))-- move change x to right ref
+func(x) --- left ref
+
+
+
+fun[3] = 5; //return by ref allow the funciton to appear on left hand side of a statement.
+//overloading operator []
+
+
+
+
+const int * a ; 
+//the value pointed by the pointer is const and cannot be modified.
+You can re-write the above as
+int const * a ;
+
+int * const a; //the pointer value is const and cannot be changed. a = &b is not allowed.
+
+
+const int * const a;  //both pointer and the value pointed by the pointer are const.
+//first const is for the value pointed by the pointer
+//second const is for the pointer
+
+
+
+
